@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { TextField, Button, Grid, Typography } from '@mui/material';
+import { TextField, Button, Grid, Typography, Snackbar, Alert, Card, CardContent } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import axios from 'axios';
 
 function BookingForm() {
     const [booking, setBooking] = useState({
@@ -15,8 +17,12 @@ function BookingForm() {
             email: '',
             phone: ''
         },
-        status: 'scheduled' // This can be dynamically set or left out if handled server-side
+        status: 'scheduled'  // This can be dynamically set or left out if handled server-side
     });
+
+    const [open, setOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [alertSeverity, setAlertSeverity] = useState('info');
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -39,12 +45,33 @@ function BookingForm() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // POST request logic here (using Axios as shown earlier)
+        try {
+            const response = await axios.post('http://localhost:5000/api/bookings', booking);
+            setSnackbarMessage('Booking created successfully!');
+            setAlertSeverity('success');
+            setOpen(true);
+            // Optionally reset the form or handle other UI updates
+        } catch (error) {
+            setSnackbarMessage('Failed to create booking.');
+            setAlertSeverity('error');
+            setOpen(true);
+        }
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <Typography variant="h6">Create Booking</Typography>
+        <Card variant="outlined">
+        <CardContent>
+        <Typography variant="h5" component="h2" gutterBottom>
+        Create Booking
+      </Typography>
+      <form onSubmit={handleSubmit}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <TextField
@@ -68,6 +95,7 @@ function BookingForm() {
                         onChange={handleChange}
                     />
                 </Grid>
+                {/* Additional fields for pet details and owner details */}
                 <Grid item xs={12} sm={4}>
                     <TextField
                         fullWidth
@@ -126,19 +154,27 @@ function BookingForm() {
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <Button type="submit" color="primary" variant="contained">
-                        Submit
-                    </Button>
+                <Button
+          type="submit"
+          color="primary"
+          variant="contained"
+          startIcon={<AddIcon />}  // Remember to import the icons you need from MUI
+          sx={{ marginTop: 2 }}
+        >
+          Add Booking
+        </Button>
                 </Grid>
             </Grid>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={alertSeverity} sx={{ width: '100%' }}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </form>
+        </CardContent>
+  </Card>
+
     );
 }
 
 export default BookingForm;
-// In this code snippet, we have created a form component called BookingForm that allows users to create a new booking.
-// The form includes fields for the booking date, service type, pet details (name, age, breed), and owner details (name, email, phone).
-// The form also includes a submit button that will trigger a POST request to create a new booking.
-// The handleChange function updates the booking state as users input data into the form fields.
-// The handleSubmit function will handle the form submission logic, which can include making a POST request to the server to create a new booking.
-// You can customize the form fields and styling to fit your application's needs.
