@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid, Typography, Snackbar, Alert, Card, CardContent } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import  AddIcon  from '@mui/icons-material/Add';
+import PetsIcon from '@mui/icons-material/Pets';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import axios from 'axios';
 
 function BookingForm() {
@@ -66,13 +68,16 @@ function BookingForm() {
     };
 
     return (
-        <Card variant="outlined">
-        <CardContent>
-        <Typography variant="h5" component="h2" gutterBottom>
-        Create Booking
-      </Typography>
-      <form onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
+        <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={12} md={8} lg={6}>
+                <Card variant="outlined">
+                    <CardContent>
+                        <Typography variant="h4" component="h1" gutterBottom>
+                            Create Booking
+                        </Typography>
+                        <form onSubmit={handleSubmit}>
+                            {/* Date and Service Type fields */}
+                            <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <TextField
                         fullWidth
@@ -95,8 +100,18 @@ function BookingForm() {
                         onChange={handleChange}
                     />
                 </Grid>
-                {/* Additional fields for pet details and owner details */}
-                <Grid item xs={12} sm={4}>
+                </Grid>
+                            {/* ... */}
+                            
+                            {/* Pet Details Card */}
+                            <Card variant="outlined" sx={{ margin: 2 }}>
+                                <CardContent>
+                                <Typography variant="h6" component="h2" gutterBottom>
+        <PetsIcon /> Pet Details {/* Adding the Pet icon here */}
+      </Typography>
+                                    <Grid container spacing={2}>
+                                        {/* Pet detail fields */}
+                                        <Grid item xs={12} sm={4}>
                     <TextField
                         fullWidth
                         label="Pet Name"
@@ -124,7 +139,21 @@ function BookingForm() {
                         onChange={handleChange}
                     />
                 </Grid>
-                <Grid item xs={12} sm={4}>
+                                        {/* ... */}
+
+                                    </Grid>
+                                </CardContent>
+                            </Card>
+
+                            {/* Owner Details Card */}
+                            <Card variant="outlined" sx={{ margin: 2 }}>
+                                <CardContent>
+                                <Typography variant="h6" component="h2" gutterBottom>
+        <PersonOutlineIcon /> Owner Details {/* Adding the Person icon here */}
+      </Typography>
+                                    <Grid container spacing={2}>
+                                        {/* Owner detail fields */}
+                                        <Grid item xs={12} sm={4}>
                     <TextField
                         fullWidth
                         label="Owner Name"
@@ -153,28 +182,36 @@ function BookingForm() {
                         onChange={handleChange}
                     />
                 </Grid>
-                <Grid item xs={12}>
-                <Button
-          type="submit"
-          color="primary"
-          variant="contained"
-          startIcon={<AddIcon />}  // Remember to import the icons you need from MUI
-          sx={{ marginTop: 2 }}
-        >
-          Add Booking
-        </Button>
-                </Grid>
+                                        {/* ... */}
+                                    </Grid>
+                                </CardContent>
+                            </Card>
+
+                            <Button
+                                type="submit"
+                                color="primary"
+                                variant="contained"
+                                fullWidth
+                                size="large"
+                                startIcon={<AddIcon />}
+                                sx={{ marginTop: 2 }}
+                            >
+                                Add Booking
+                            </Button>
+                        </form>
+                    </CardContent>
+                </Card>
             </Grid>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={alertSeverity} sx={{ width: '100%' }}>
                     {snackbarMessage}
                 </Alert>
             </Snackbar>
-        </form>
-        </CardContent>
-  </Card>
-
+        </Grid>
     );
 }
 
 export default BookingForm;
+
+
+  
