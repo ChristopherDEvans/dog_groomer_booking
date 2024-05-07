@@ -1,9 +1,21 @@
 import React, { useState } from 'react';
-import { TextField, Button, Grid, Typography, Snackbar, Alert, Card, CardContent } from '@mui/material';
+import { TextField, 
+        Button, 
+        Grid, 
+        Typography, 
+        Snackbar, 
+        Alert, 
+        Card, 
+        CardContent, 
+        FormControl, 
+        InputLabel, 
+        Select, 
+        MenuItem } from '@mui/material';
 import  AddIcon  from '@mui/icons-material/Add';
 import PetsIcon from '@mui/icons-material/Pets';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import axios from 'axios';
+import { services } from '../utils/constants';  // Adjust the path based on your directory structure
 
 function BookingForm() {
     const [booking, setBooking] = useState({
@@ -92,13 +104,29 @@ function BookingForm() {
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField
-                        fullWidth
-                        label="Service Type"
-                        name="serviceType"
-                        value={booking.serviceType}
-                        onChange={handleChange}
-                    />
+                <FormControl fullWidth variant="outlined">
+  <InputLabel id="service-type-label"
+   style={{ transform: booking.serviceType ? 'scale(0.75) translate(0, -1.5rem)' : undefined }}
+  >Service Type</InputLabel>
+  <Select
+    labelId="service-type-label"
+    id="serviceType"
+    name="serviceType"
+    value={booking.serviceType}
+    onChange={handleChange}
+    label="Service Type"  // This props ensures the label moves correctly
+    displayEmpty
+  >
+    <MenuItem value="">
+      <em>None</em>
+    </MenuItem>
+    {services.map((service, index) => (
+      <MenuItem key={index} value={service}>{service}</MenuItem>
+    ))}
+  </Select>
+</FormControl>
+
+
                 </Grid>
                 </Grid>
                             {/* ... */}
