@@ -109,21 +109,19 @@ function BookingForm() {
    style={{ transform: booking.serviceType ? 'scale(0.75) translate(0, -1.5rem)' : undefined }}
   >Service Type</InputLabel>
   <Select
-    labelId="service-type-label"
-    id="serviceType"
-    name="serviceType"
-    value={booking.serviceType}
-    onChange={handleChange}
-    label="Service Type"  // This props ensures the label moves correctly
-    displayEmpty
-  >
-    <MenuItem value="">
-      <em>None</em>
-    </MenuItem>
-    {services.map((service, index) => (
-      <MenuItem key={index} value={service}>{service}</MenuItem>
-    ))}
-  </Select>
+  labelId="service-type-label"
+  id="serviceType"
+  name="serviceType"
+  value={booking.serviceType}
+  onChange={handleChange}
+  displayEmpty
+>
+  <MenuItem value="" disabled></MenuItem>
+  {services.map((service, index) => (
+    <MenuItem key={index} value={service}>{service}</MenuItem>
+  ))}
+</Select>
+
 </FormControl>
 
 

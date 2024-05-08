@@ -36,6 +36,15 @@ const theme = createTheme({
           }
         }
       }
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused': {
+            transform: 'translate(14px, -6px) scale(0.75)', // Ensures label shrinks and moves up when focused
+          }
+        }
+      }
     }
   },
 });
