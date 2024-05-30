@@ -14,10 +14,11 @@ function Navbar() {
     const drawer = (
         <div>
             <List>
-                {['Home', 'Book Appointment', 'View Bookings', 'Admin Dashboard', 'Login/Register'].map((text, index) => (
-                    <ListItemButton component={RouterLink} to={"/" + text.replace(/ /g, "").toLowerCase()} key={text}>
-                        <ListItemText primary={text} />
-                    </ListItemButton>
+                {['HomePage', 'Book Appointment', 'View Bookings', 'Admin Dashboard', 'Login'].map((text, index) => (
+                    <ListItemButton component={RouterLink} to={text === 'Home' ? '/' : "/" + text.replace(/ /g, "").toLowerCase()} key={text}>
+                    <ListItemText primary={text} />
+                </ListItemButton>
+                
                 ))}
             </List>
         </div>

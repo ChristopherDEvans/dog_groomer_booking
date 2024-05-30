@@ -1,21 +1,30 @@
 import React from 'react';
-import { ThemeProvider } from '@mui/material/styles';
-import theme from './theme';
-import CssBaseline from '@mui/material/CssBaseline';
-import BookingForm from './components/BookingForm'; // Adjust the path as necessary if your BookingForm is located differently
-// import ThemeTest from './components/ThemeTest';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import HomePage from './components/HomePage';
+import LoginPage from './components/LoginPage';
+import BookingForm from './components/BookingForm'; 
+import ViewBookings from './components/ViewBookings'; 
+import AdminDashboard from './components/AdminDashboard'; 
+import RegisterPage from './components/RegisterPage';
+// import ThemeTest from './components/ThemeTest';
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline /> {/* Provides a CSS baseline */}
-      <div style={{ margin: '20px' }}> {/* Provides some margin around the form */}
-        <Navbar />
-        <BookingForm />
-        
-      </div>
-    </ThemeProvider>
+    <div>
+    <Navbar />
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/bookappointment" element={<BookingForm />} />
+      <Route path="/viewbookings" element={<ViewBookings />} />
+      <Route path="/admindashboard" element={<AdminDashboard />} />
+      <Route path="/register" element={<RegisterPage />} />
+
+
+      {/* <Route path="/themetest" element={<ThemeTest />} /> */}
+    </Routes>
+  </div>
   );
 }
 
